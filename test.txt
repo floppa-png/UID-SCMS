@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizen Complaint Services</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+.phone-row{
+    display:flex;
+    gap:10px;
+}
+
+.phone-row input{
+    flex:1;
+}
+
+.otp-row{
+    display:flex;
+    gap:10px;
+}
+
+.otp-row input{
+    flex:1;
+}
+
+:root{
+    --bg:#000;
+    --card:rgba(255,255,255,0.05);
+    --border:rgba(255,255,255,0.08);
+    --text:#f5f5f7;
+    --muted:#86868b;
+    --accent:#2997ff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    padding:40px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+}
+
+h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:var(--muted);
+    margin-bottom:30px;
+}
+
+.top-buttons{
+    display:flex;
+    gap:15px;
+    margin-bottom:30px;
+}
+
+button{
+    padding:12px 22px;
+    border-radius:30px;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.primary{
+    background:var(--accent);
+    color:white;
+}
+
+.secondary{
+    background:#222;
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.back{
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--muted);
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.panel{
+    overflow:hidden;
+    max-height:0;
+    opacity:0;
+    transform:translateY(-10px);
+    transition:
+        max-height 0.6s ease,
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+.panel.active{
+    max-height:800px;
+    opacity:1;
+    transform:translateY(0);
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:40px;
+    backdrop-filter:blur(20px);
+}
+
+input,select,textarea{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    margin-bottom:20px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#111;
+    color:var(--text);
+}
+
+.success{
+    margin-top:20px;
+    padding:15px;
+    background:#1e3a1e;
+    border-radius:10px;
+    display:none;
+}
+
+.top-back{
+    position:fixed;
+    top:25px;
+    left:25px;
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--muted);
+    padding:8px 16px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:500;
+    transition:all 0.3s ease;
+    backdrop-filter:blur(10px);
+}
+
+.top-back:hover{
+    background:rgba(255,255,255,0.08);
+    color:var(--text);
+    transform:translateX(-3px);
+}
+</style>
+</head>
+
+<body>
+
+<button class="top-back" onclick="window.location='home.html'">
+    ←  Back
+</button>
+
+<div class="container">
+
+<h1>Citizen Complaint Services</h1>
+<p class="subtitle">
+Submit or track civic issues efficiently.
+</p>
+
+<div class="top-buttons">
+<button class="primary" onclick="showPanel('complaintPanel')">Register Complaint</button>
+<button class="secondary" onclick="showPanel('trackPanel')">Track Complaint</button>
+</div>
+
+<!-- Complaint Panel -->
+<div id="complaintPanel" class="panel">
+<div class="card">
+<h2>Register a Complaint</h2>
+
+<form id="complaintForm">
+
+<label>Problem Category</label>
+<select id="category" required>
+<option value="">Select Category</option>
+<option>Garbage</option>
+<option>Road Damage</option>
+<option>Water Leakage</option>
+<option>Streetlight</option>
+</select>
+
+<label>Phone Number</label>
+
+<div class="phone-row">
+    <input type="tel" id="phone" required pattern="[0-9]{10}" placeholder="Enter 10-digit number">
+    <button type="button" class="secondary" onclick="sendOTP()">Send OTP</button>
+</div>
+
+<div id="otpSection" style="display:none; margin-top:15px;">
+    <div class="otp-row">
+        <input type="text" id="otpInput" placeholder="Enter OTP">
+        <button type="button" class="secondary" onclick="verifyOTP()">Verify OTP</button>
+    </div>
+    <div id="otpStatus" style="margin-top:10px; font-size:14px;"></div>
+</div>
+
+<br>
+<button type="submit" class="primary">Submit Complaint</button>
+
+</form>
+
+<div class="success" id="successMsg">
+Complaint submitted successfully.
+</div>
+
+</div>
+</div>
+
+<!-- Tracking Panel -->
+<div id="trackPanel" class="panel">
+<div class="card">
+<h2>Track Your Complaint</h2>
+
+<input type="text" id="trackPhone" placeholder="Enter Phone Number">
+<button class="primary" onclick="trackComplaint()">Track</button>
+
+<div id="trackResults" style="margin-top:20px;"></div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+function showPanel(panelId){
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach(p => p.classList.remove('active'));
+
+    setTimeout(()=>{
+        document.getElementById(panelId).classList.add('active');
+    },200);
+}
+
+document.getElementById("complaintForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    if(!otpVerified){
+        alert("Please verify OTP before submitting.");
+        return;
+    }
+
+
+    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+
+    let complaint = {
+        id: Date.now(),
+        category: category.value,
+        description: description.value,
+        contact: phone.value,
+        status: "Pending"
+    };
+
+    complaints.push(complaint);
+    localStorage.setItem("complaints", JSON.stringify(complaints));
+
+    document.getElementById("successMsg").style.display="block";
+    this.reset();
+});
+
+function trackComplaint(){
+    let phone = document.getElementById("trackPhone").value;
+    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+    let results = document.getElementById("trackResults");
+    results.innerHTML="";
+
+    let filtered = complaints.filter(c => c.contact === phone);
+
+    if(filtered.length === 0){
+        results.innerHTML="No complaints found.";
+        return;
+    }
+
+    filtered.forEach(c=>{
+        results.innerHTML += `
+        <div style="background:#111;padding:15px;border-radius:10px;margin-top:10px;">
+            <strong>${c.category}</strong><br>
+            ${c.description}<br>
+            Status: ${c.status}
+        </div>
+        `;
+    });
+}
+
+let generatedOTP = null;
+let otpVerified = false;
+
+function sendOTP(){
+    const phone = document.getElementById("phone").value;
+
+    if(!phone || phone.length !== 10){
+        alert("Enter valid 10-digit phone number.");
+        return;
+    }
+
+    generatedOTP = Math.floor(1000 + Math.random()*9000).toString();
+    otpVerified = false;
+
+    alert("Demo OTP: " + generatedOTP);
+
+    document.getElementById("otpSection").style.display = "block";
+    document.getElementById("otpStatus").innerText = "";
+}
+
+function verifyOTP(){
+    const enteredOTP = document.getElementById("otpInput").value;
+
+    if(enteredOTP === generatedOTP){
+        otpVerified = true;
+        document.getElementById("otpStatus").style.color = "lightgreen";
+        document.getElementById("otpStatus").innerText = "OTP Verified ✓";
+    } else {
+        otpVerified = false;
+        document.getElementById("otpStatus").style.color = "red";
+        document.getElementById("otpStatus").innerText = "Invalid OTP";
+    }
+}
+
+</script>
+
+</body>
+</html>
