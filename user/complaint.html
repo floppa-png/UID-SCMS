@@ -3,380 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Citizen Complaint Services</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-<style>
-
-@keyframes shake {
-    0% { transform: translateX(0); }
-    20% { transform: translateX(-6px); }
-    40% { transform: translateX(6px); }
-    60% { transform: translateX(-6px); }
-    80% { transform: translateX(6px); }
-    100% { transform: translateX(0); }
-}
-
-.shake{
-    animation: shake 0.4s ease;
-}
-
-.phone-row,
-.otp-row{
-    display:flex;
-    gap:12px;
-    align-items:center;
-}
-
-.phone-row input,
-.otp-row input{
-    flex:1;
-}
-
-:root{
-    --bg:#000;
-    --card:rgba(255,255,255,0.05);
-    --border:rgba(255,255,255,0.08);
-    --text:#f5f5f7;
-    --muted:#86868b;
-    --accent:#2997ff;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-
-body{
-    background:var(--bg);
-    color:var(--text);
-    padding:40px;
-}
-
-.container{
-    max-width:800px;
-    margin:auto;
-}
-
-h1{
-    font-size:40px;
-    margin-bottom:10px;
-}
-
-.subtitle{
-    color:var(--muted);
-    margin-bottom:30px;
-}
-
-.top-buttons{
-    display:flex;
-    gap:15px;
-    margin-bottom:30px;
-}
-
-button{
-    height:44px;
-    padding:0 18px;
-    border-radius:12px;
-    border:none;
-    cursor:pointer;
-    font-weight:500;
-    font-size:14px;
-    transition:all 0.25s ease;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-.primary{
-    background:var(--accent);
-    color:white;
-}
-
-.secondary{
-    background:#222;
-    color:var(--text);
-    border:1px solid var(--border);
-}
-
-.back{
-    background:transparent;
-    border:1px solid var(--border);
-    color:var(--muted);
-}
-
-button:hover{
-    transform:translateY(-2px);
-}
-
-.panel{
-    overflow:hidden;
-    max-height:0;
-    opacity:0;
-    transform:translateY(-10px);
-    transition:
-        max-height 0.6s ease,
-        opacity 0.4s ease,
-        transform 0.4s ease;
-}
-
-.panel.active{
-    max-height:800px;
-    opacity:1;
-    transform:translateY(0);
-}
-
-.card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:40px;
-    backdrop-filter:blur(20px);
-}
-
-input, select, textarea{
-    width:100%;
-    height:44px;
-    padding:0 14px;
-    margin-top:10px;
-    margin-bottom:20px;
-    border-radius:12px;
-    border:1px solid var(--border);
-    background:#111;
-    color:var(--text);
-    font-size:14px;
-}
-
-textarea{
-    height:auto;
-    padding:14px;
-    min-height:120px;
-}
-
-.success{
-    margin-top:20px;
-    padding:15px;
-    background:#1e3a1e;
-    border-radius:10px;
-    display:none;
-}
-
-.top-back{
-    position:fixed;
-    top:25px;
-    left:25px;
-    background:transparent;
-    border:1px solid var(--border);
-    color:var(--muted);
-    padding:8px 16px;
-    border-radius:20px;
-    cursor:pointer;
-    font-weight:500;
-    transition:all 0.3s ease;
-    backdrop-filter:blur(10px);
-}
-
-.top-back:hover{
-    background:rgba(255,255,255,0.08);
-    color:var(--text);
-    transform:translateX(-3px);
-}
-</style>
+<title>Register Grievance | CCMC</title>
+<link rel="stylesheet" href="user.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
-
 <body>
+<div class="top-bar">⏱ Mon-Fri 10am-5:45pm &nbsp;&nbsp;|&nbsp;&nbsp; 📞 +91 422 2390261 &nbsp;&nbsp;|&nbsp;&nbsp; ✉️ commr.coimbatore@tn.gov.in</div>
 
-<button class="top-back" onclick="window.location='home.html'">
-    ←  Back
-</button>
+<header>
+    <div class="logo-container">
+        <img src="logo.png" height="55" alt="CCMC Logo">
+        <h1 style="color:white;margin:0;">Coimbatore City Municipal Corporation</h1>
+    </div>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="complaint.html" style="border-bottom:2px solid white;padding-bottom:3px;">Public Grievances</a>
+    </nav>
+</header>
 
 <div class="container">
-
-<h1>Citizen Complaint Services</h1>
-<p class="subtitle">
-Submit or track civic issues efficiently.
-</p>
-
-<div class="top-buttons">
-<button class="primary" onclick="showPanel('complaintPanel')">Register Complaint</button>
-<button class="secondary" onclick="showPanel('trackPanel')">Track Complaint</button>
-</div>
-
-<!-- Complaint Panel -->
-<div id="complaintPanel" class="panel">
-<div class="card">
-<h2>Register a Complaint</h2>
-
-<form id="complaintForm">
-
-<label>Problem Category</label>
-<select id="category" required>
-<option value="">Select Category</option>
-<option>Garbage</option>
-<option>Road Damage</option>
-<option>Water Leakage</option>
-<option>Streetlight</option>
-</select>
-
-<label>Description</label>
-<textarea id="description" rows="4" placeholder="Describe the issue in detail" required></textarea>
-
-<label>Phone Number</label>
-
-<div class="phone-row">
-    <input type="tel" id="phone" required pattern="[0-9]{10}" placeholder="Enter 10-digit number">
-    <button type="button" class="secondary" onclick="sendOTP()">Send OTP</button>
-</div>
-
-<div id="otpSection" style="display:none; margin-top:15px;">
-    <div class="otp-row">
-        <input type="text" id="otpInput" placeholder="Enter OTP">
-        <button type="button" class="secondary" onclick="verifyOTP()">Verify OTP</button>
-    </div>
-    <div id="otpStatus" style="margin-top:10px; font-size:14px;"></div>
-</div>
-
-<br>
-<button type="submit" class="primary">Submit Complaint</button>
-
-</form>
-
-<div class="success" id="successMsg">
-Complaint submitted successfully.
-</div>
-
-</div>
-</div>
-
-<!-- Tracking Panel -->
-<div id="trackPanel" class="panel">
-<div class="card">
-<h2>Track Your Complaint</h2>
-
-<input type="text" id="trackPhone" placeholder="Enter Phone Number">
-<button class="primary" onclick="trackComplaint()">Track</button>
-
-<div id="trackResults" style="margin-top:20px;"></div>
-
-</div>
-</div>
-
-</div>
-
-<script>
-
-function showPanel(panelId){
-    const panels = document.querySelectorAll('.panel');
-    panels.forEach(p => p.classList.remove('active'));
-
-    setTimeout(()=>{
-        document.getElementById(panelId).classList.add('active');
-    },200);
-}
-
-document.getElementById("complaintForm").addEventListener("submit", function(e){
-    e.preventDefault();
-
-    if(!otpVerified){
-        alert("Please verify OTP before submitting.");
-        return;
-    }
-
-
-    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
-
-    let complaint = {
-        id: Date.now(),
-        category: category.value,
-        description: description.value,
-        contact: phone.value,
-        status: "Pending"
-    };
-
-    complaints.push(complaint);
-    localStorage.setItem("complaints", JSON.stringify(complaints));
-
-    document.getElementById("successMsg").style.display="block";
-    this.reset();
-});
-
-function trackComplaint(){
-    let phone = document.getElementById("trackPhone").value;
-    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
-    let results = document.getElementById("trackResults");
-    results.innerHTML="";
-
-    let filtered = complaints.filter(c => c.contact === phone);
-
-    if(filtered.length === 0){
-        results.innerHTML="No complaints found.";
-        return;
-    }
-
-    filtered.forEach(c=>{
-        results.innerHTML += `
-        <div style="background:#111;padding:15px;border-radius:10px;margin-top:10px;">
-            <strong>${c.category}</strong><br>
-            ${c.description}<br>
-            Status: ${c.status}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;">
+        <div>
+            <h2>Civic Grievance Redressal</h2>
+            <p class="subtitle" style="margin-bottom:0;">Submit a new complaint or track an existing one using your registered mobile number.</p>
         </div>
-        `;
-    });
-}
+        <div class="button-group" style="min-width:320px;">
+            <button class="btn-primary" onclick="showPanel('complaintPanel')">Register Issue</button>
+            <button class="btn-secondary" onclick="showPanel('trackPanel')">Track Status</button>
+        </div>
+    </div>
 
-let generatedOTP = null;
-let otpVerified = false;
+    <!-- Register Grievance -->
+    <div id="complaintPanel" class="panel active">
+        <form id="complaintForm" class="card">
+            <h3>Complaint Details</h3>
+            <hr style="border:0;border-top:1px solid #e0e0e0;margin-bottom:20px;">
 
-function sendOTP(){
-    const phone = document.getElementById("phone").value;
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                <div>
+                    <label>Problem Category</label>
+                    <select id="category" required>
+                        <option value="">Select Service / Department</option>
+                        <option value="Garbage Collection">Garbage Collection</option>
+                        <option value="Road Damage / Potholes">Road Damage / Potholes</option>
+                        <option value="Water Supply / Leakage">Water Supply / Leakage</option>
+                        <option value="Streetlight Fault">Streetlight Fault</option>
+                        <option value="Drainage Overlap">Drainage Overlap</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Mobile Number (For Status SMS)</label>
+                    <div class="otp-section">
+                        <input type="tel" id="phone" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+                        <button type="button" class="btn-secondary" onclick="sendOTP()">Send OTP</button>
+                    </div>
+                </div>
+            </div>
 
-    if(!phone || phone.length !== 10){
-        alert("Enter valid 10-digit phone number.");
-        return;
-    }
+            <div id="otpBlock" class="otp-block" style="display:none;">
+                <label>Enter OTP Received via SMS</label>
+                <div class="otp-section">
+                    <input type="text" id="otpInput" placeholder="4-digit OTP" style="width:120px;">
+                    <button type="button" id="verifyBtn" class="btn-primary" onclick="verifyOTP()">Verify OTP</button>
+                </div>
+            </div>
 
-    generatedOTP = Math.floor(1000 + Math.random()*9000).toString();
-    otpVerified = false;
+            <label>Location Selection</label>
+            <select id="streetSelect" style="margin-bottom:10px;">
+                <option value="">-- Or select a major area/street --</option>
+                <option value="11.0183,76.9725">Gandhipuram</option>
+                <option value="11.0069,76.9535">R.S. Puram</option>
+                <option value="10.9997,76.9660">Town Hall</option>
+                <option value="11.0141,76.9856">Peelamedu</option>
+                <option value="11.0336,76.9602">Saibaba Colony</option>
+                <option value="10.9610,76.9654">Kuniyamuthur</option>
+                <option value="11.0503,76.9934">Saravanampatti</option>
+                <option value="11.0044,77.0125">Singanallur</option>
+                <option value="11.0267,76.9388">Vadavalli</option>
+                <option value="10.9419,76.9760">Podanur</option>
+            </select>
 
-    alert("Demo OTP: " + generatedOTP);
+            <label>Location on Map (Click to Pinpoint)</label>
+            <div id="map" class="map-container"></div>
+            <input type="hidden" id="mockCoordinates">
 
-    document.getElementById("otpSection").style.display = "block";
-    document.getElementById("otpStatus").innerText = "";
-}
+            <label>Nearest Landmark (For easy identification by officers)</label>
+            <input type="text" id="landmark" required placeholder="E.g., Near Post Office">
 
-function verifyOTP(){
-    const enteredOTP = document.getElementById("otpInput").value;
-    const btn = document.querySelector(".otp-row button");
+            <label>Describe the Issue</label>
+            <textarea id="description" rows="4" required placeholder="Please provide specific details about the issue..."></textarea>
 
-    if(enteredOTP === generatedOTP){
+            <label>Upload Supporting Images</label>
+            <div class="file-upload" id="dropZone">
+                📷 Click here or drag &amp; drop images to upload evidence
+                <input type="file" id="fileInput" accept="image/*" multiple>
+            </div>
+            <div class="image-preview-container" id="imagePreviewContainer"></div>
 
-        otpVerified = true;
+            <button type="submit" class="btn-primary" style="width:100%;font-size:16px;margin-top:10px;">Submit Grievance to CCMC</button>
 
-        btn.innerText = "Verified ✓";
-        btn.style.background = "#1f6f2b";
-        btn.style.color = "white";
-        btn.style.border = "none";
-        btn.style.pointerEvents = "none";
+            <div id="successMsg" style="display:none;margin-top:20px;padding:15px;background:#C8E6C9;color:#1B5E20;border-radius:6px;border-left:5px solid #2E7D32;">
+                <strong>Success!</strong> Your complaint has been registered. An officer will inspect the location shortly.
+            </div>
+        </form>
+    </div>
 
-        document.getElementById("otpStatus").innerText = "";
+    <!-- Track Grievance -->
+    <div id="trackPanel" class="panel">
+        <div class="card">
+            <h3>Track Grievance Status</h3>
+            <hr style="border:0;border-top:1px solid #e0e0e0;margin-bottom:20px;">
+            <p style="margin-bottom:15px;">Enter your registered mobile number to view the action taken by the municipal authority.</p>
+            <div style="display:flex;gap:15px;">
+                <input type="text" id="trackPhone" placeholder="10-digit mobile number" style="margin-bottom:0;">
+                <button class="btn-primary" onclick="trackComplaint()">Search Records</button>
+            </div>
+            <div id="trackResults" style="margin-top:30px;"></div>
+        </div>
+    </div>
+</div>
 
-    } else {
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div>
+            <h4>Coimbatore City Municipal Corporation</h4>
+            <p>Coimbatore - 641 001, Tamil Nadu, India</p>
+            <p style="margin-top:8px;">📞 +91 - 422 - 2390261, 2390262, 2390263</p>
+            <p>✉️ commr.coimbatore@tn.gov.in</p>
+        </div>
+        <div>
+            <h4>Working Hours</h4>
+            <p>Mon – Fri &nbsp; 10:00 am – 05:45 pm</p>
+            <p>Saturday &nbsp; 10:00 am – 02:00 pm</p>
+            <p>Sunday &nbsp;&nbsp;&nbsp; Closed</p>
+        </div>
+        <div>
+            <h4>Quick Links</h4>
+            <a href="complaint.html">Register a Complaint</a>
+            <a href="complaint.html">Track Complaint Status</a>
+            <a href="../admin/UIDAdminPortal.html">Officer Login</a>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2025 Coimbatore City Municipal Corporation. All rights reserved.</div>
+</footer>
 
-        otpVerified = false;
-
-        btn.innerText = "Invalid OTP";
-        btn.style.background = "#8b1c1c";
-        btn.style.color = "white";
-
-        btn.classList.add("shake");
-
-        setTimeout(()=>{
-            btn.classList.remove("shake");
-            btn.innerText = "Verify OTP";
-            btn.style.background = "";
-            btn.style.color = "";
-        },1000);
-    }
-}
-
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

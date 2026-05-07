@@ -1,50 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>City Municipal Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-<style>
-body{margin:0;font-family:Inter;background:#000;color:#fff;}
-section{padding:100px 10%;}
-.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;}
-h1{font-size:60px;font-weight:800;}
-p{color:#aaa;max-width:700px;line-height:1.7;}
-.stats{display:flex;gap:40px;margin-top:40px;flex-wrap:wrap;}
-.stat{background:#111;padding:30px;border-radius:20px;}
-button{padding:15px 30px;background:#2997ff;border:none;border-radius:50px;color:white;font-weight:600;margin-top:40px;cursor:pointer;}
-</style>
+<title>Coimbatore Smart Governance Portal</title>
+<link rel="stylesheet" href="user.css">
 </head>
 <body>
+<div class="top-bar">⏱ Mon-Fri 10am-5:45pm &nbsp;&nbsp;|&nbsp;&nbsp; 📞 +91 422 2390261 &nbsp;&nbsp;|&nbsp;&nbsp; ✉️ commr.coimbatore@tn.gov.in</div>
+
+<header>
+    <div class="logo-container">
+        <img src="logo.png" height="55" alt="CCMC Logo">
+        <h1 style="color:white;margin:0;">Coimbatore City Municipal Corporation</h1>
+    </div>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="complaint.html">Public Grievances</a>
+        <a href="../admin/UIDAdminPortal.html">Officer Login</a>
+    </nav>
+</header>
 
 <section class="hero">
-<h1>Welcome to Smart City Municipal Corporation</h1>
-<p>
-Delivering efficient public services including sanitation, water supply,
-road maintenance, and street lighting management with a dedicated workforce.
-</p>
-
-<div class="stats">
-<div class="stat">
-<h2>1,200+</h2>
-<p>Sanitation Workers</p>
-</div>
-<div class="stat">
-<h2>350+</h2>
-<p>Engineers & Field Officers</p>
-</div>
-<div class="stat">
-<h2>24/7</h2>
-<p>Service Monitoring</p>
-</div>
-</div>
-
-<button onclick="window.location='complaint.html'">
-Not Satisfied? Lodge a Complaint
-</button>
-
+    <h2>Coimbatore Smart Governance Portal</h2>
+    <p>Welcome to the official civic services portal for Coimbatore. We are committed to delivering
+        transparent, efficient, and rapid public services. Engage with your municipal corporation to report
+        issues concerning sanitation, public infrastructure, and utilities.</p>
+    <button class="btn-primary" style="font-size:18px;padding:15px 30px;" onclick="window.location='complaint.html'">
+        Register a Complaint Online
+    </button>
 </section>
 
+<section class="features">
+    <div class="feature-card">
+        <h3>24/7 Monitoring</h3>
+        <p>Our dedicated nodal officers ensure your complaints are tracked and assigned around the clock.</p>
+    </div>
+    <div class="feature-card">
+        <h3>Location Tracking</h3>
+        <p>Pinpoint the exact location of civic issues so ground teams can resolve them rapidly.</p>
+    </div>
+    <div class="feature-card">
+        <h3>SLA Enforcement</h3>
+        <p>Issues unresolved within 48 hours are automatically escalated to higher municipal authorities.</p>
+    </div>
+</section>
+
+<div class="container" style="text-align:center;margin-top:80px;margin-bottom:80px;">
+    <h2>Working Together for a Cleaner Coimbatore</h2>
+    <p class="subtitle">Your participation plays a vital role in building a cleaner, safer, and smarter Coimbatore. Through this portal,
+                          citizens can report civic issues related to sanitation, waste management, damaged roads, street lighting,
+                          water supply, and public infrastructure. Together, we aim to improve urban living standards through transparent governance,
+                          rapid response systems, and community collaboration.</p>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div>
+            <h4>Coimbatore City Municipal Corporation</h4>
+            <p>Coimbatore - 641 001, Tamil Nadu, India</p>
+            <p style="margin-top:8px;">📞 +91 - 422 - 2390261, 2390262, 2390263</p>
+            <p>✉️ commr.coimbatore@tn.gov.in</p>
+        </div>
+        <div>
+            <h4>Working Hours</h4>
+            <p>Mon – Fri &nbsp; 10:00 am – 05:45 pm</p>
+            <p>Saturday &nbsp; 10:00 am – 02:00 pm</p>
+            <p>Sunday &nbsp;&nbsp;&nbsp; Closed</p>
+        </div>
+        <div>
+            <h4>Quick Links</h4>
+            <a href="complaint.html">Register a Complaint</a>
+            <a href="complaint.html">Track Complaint Status</a>
+            <a href="../admin/UIDAdminPortal.html">Officer Login</a>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2025 Coimbatore City Municipal Corporation. All rights reserved.</div>
+</footer>
 </body>
 </html>

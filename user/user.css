@@ -1,0 +1,142 @@
+/* Coimbatore Smart City User Portal Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary: #1565C0;
+    --primary-hover: #0d47a1;
+    --secondary: #2E7D32;
+    --accent: #E3F2FD;
+    --background: #F4F6F8;
+    --card-bg: #FFFFFF;
+    --text-main: #212121;
+    --text-muted: #616161;
+    --border: #E0E0E0;
+    --shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+body { background: var(--background); color: var(--text-main); line-height: 1.6; }
+
+/* Top Bar */
+.top-bar { background: var(--primary-hover); padding: 6px 40px; font-size: 12px; color: var(--accent); }
+
+/* Header */
+header {
+    background: var(--primary); color: white;
+    padding: 15px 40px; display: flex;
+    justify-content: space-between; align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky; top: 0; z-index: 1000;
+}
+header .logo-container { display: flex; align-items: center; gap: 15px; }
+header h1 { font-size: 20px; font-weight: 700; margin: 0; }
+header nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: 500; transition: opacity 0.3s; }
+header nav a:hover { opacity: 0.8; }
+
+/* Layout */
+.container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+
+.card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 30px; box-shadow: var(--shadow); margin-bottom: 30px;
+}
+
+/* Typography */
+h1, h2, h3 { color: var(--primary); margin-bottom: 15px; }
+.subtitle { color: var(--text-muted); margin-bottom: 25px; }
+
+/* Forms */
+label { display: block; font-weight: 500; margin-bottom: 8px; color: var(--text-main); }
+
+input, select, textarea {
+    width: 100%; padding: 12px; margin-bottom: 20px;
+    border: 1px solid var(--border); border-radius: 6px;
+    background: #fff; color: var(--text-main); transition: border-color 0.3s;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+
+/* Buttons */
+button {
+    padding: 12px 24px; border-radius: 6px; border: none;
+    cursor: pointer; font-weight: 500; font-size: 15px; transition: all 0.3s ease;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-secondary { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+.btn-secondary:hover { background: var(--accent); }
+.btn-success { background: var(--secondary); color: white; }
+
+/* Map */
+.map-container { width: 100%; height: 300px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 15px; z-index: 1; }
+
+/* File Upload */
+.file-upload {
+    padding: 20px; border: 2px dashed var(--border); text-align: center;
+    border-radius: 6px; margin-bottom: 20px; color: var(--text-muted);
+    cursor: pointer; background: #fafafa; position: relative;
+}
+.file-upload:hover { background: #f0f0f0; }
+.file-upload input[type="file"] {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0; cursor: pointer; height: 100%;
+}
+
+.image-preview-container { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.img-preview { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
+
+/* OTP */
+.otp-block {
+    display: flex; background: #E8F5E9; padding: 15px 20px;
+    border-radius: 6px; margin-bottom: 20px;
+    align-items: center; justify-content: space-between;
+}
+.otp-block label { color: #2E7D32; margin-bottom: 0; font-weight: 600; }
+.otp-section { display: flex; gap: 15px; align-items: stretch; margin-bottom: 20px; }
+.otp-section input { margin-bottom: 0; }
+.otp-section button { margin: 0; white-space: nowrap; }
+
+/* Panel toggles */
+.button-group { display: flex; gap: 15px; }
+.button-group button { flex: 1; }
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Status badges */
+.status-badge { padding: 6px 12px; border-radius: 50px; font-size: 13px; font-weight: 600; }
+.status-pending  { background: #ffe0b2; color: #e65100; }
+.status-progress { background: #bbdefb; color: #0d47a1; }
+.status-resolved { background: #c8e6c9; color: #1b5e20; }
+
+/* Home Page */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('cbe.jpg') center/cover;
+    height: 80vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; color: white; padding: 0 20px;
+}
+.hero h2 { color: white; font-size: 48px; margin-bottom: 20px; font-weight: 700; }
+.hero p { font-size: 20px; max-width: 800px; margin-bottom: 40px; line-height: 1.6; }
+
+.features { display: flex; justify-content: center; gap: 30px; margin-top: -60px; padding: 0 20px; flex-wrap: wrap; }
+.feature-card {
+    background: white; padding: 30px; border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); width: 300px;
+    text-align: center; border-top: 4px solid var(--primary);
+}
+.feature-card h3 { margin-bottom: 15px; font-size: 20px; }
+.feature-card p { color: var(--text-muted); }
+
+/* Footer */
+.site-footer { background: #15192B; color: #ccc; padding: 50px 40px 0; margin-top: 60px; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; padding-bottom: 40px; }
+.footer-grid h4 { color: white; margin-bottom: 12px; font-size: 15px; }
+.footer-grid p { font-size: 13px; line-height: 1.8; }
+.footer-grid a { display: block; color: #aaa; text-decoration: none; font-size: 13px; line-height: 2; transition: color 0.2s; }
+.footer-grid a:hover { color: white; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); text-align: center; padding: 18px 0; font-size: 12px; color: #666; }
